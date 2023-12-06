@@ -1,0 +1,9 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: springboot3-kafka
+  kafka:
+#kafka????
+    bootstrap-servers: 172.23.7.215:9092,172.23.7.216:9092,172.23.7.217:9092

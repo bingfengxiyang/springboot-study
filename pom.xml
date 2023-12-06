@@ -10,7 +10,7 @@
     <modules>
         <!-- 模块 -->
         <module>kafkaTemplete</module>
-
+        <module>springKafkaClients</module>
     </modules>
     <description>study</description>
     <properties>
