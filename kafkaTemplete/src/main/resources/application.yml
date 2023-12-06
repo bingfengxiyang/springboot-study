@@ -1,0 +1,69 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: springboot3-kafka
+  kafka:
+    #kafka集群地址
+    bootstrap-servers: 172.23.7.215:9092,172.23.7.216:9092,172.23.7.217:9092
+    template:
+      #默认主题
+      default-topic: templateTopic
+    heartbeat-interval: 3000
+    #生产者配置
+    producer:
+        #重试次数
+        retries: 3
+        ## 批次大小16K
+        batch-size: 16384
+        ## 生产端缓冲区大小
+        buffer-memory: 33554432
+        #延迟发送
+        linger-ms: 100
+        #应答级别:多少个分区副本备份完成时向生产者发送ack确认(可选0、1、all/-1)
+        acks: -1
+        # 序列化
+        key-serializer: org.apache.kafka.common.serialization.StringSerializer
+        value-serializer: org.apache.kafka.common.serialization.StringSerializer
+        #事务配置
+#        transaction-id-prefix: tx_
+        #压缩类型 snappy/gzip/lz4
+        compression-type: snappy
+        #自动提交间隔 发送间隔
+        interval-ms: 100
+        max.in.flight.requests.per.connection: 1
+
+        #自定义分区器
+#        partitioner-class: com.kafkalearn.config.CustomizePartitioner
+    #消费者配置
+    consumer:
+        #默认的消费组ID
+        group-id: test-group1
+        #是否自动提交offset
+        enable-auto-commit: true
+        #提交offset延时
+        auto-commit-interval: 2000
+        #earliest/latest/none
+        auto-offset-reset: latest
+        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        max-poll-records: 100 #每次最大拉取的消息数量
+        # 消费会话超时时间（超过这个时间 consumer 没有发送心跳，就会触发 rebalance 操作）
+        #session-timeout-ms: 30000 #消费者心跳超时时间
+        #请求超时时间
+        #request-timeout-ms: 40000
+    listener:
+      # consumer listener topics 不存在时，启动项目就会报错
+      missing-topics-fatal: false
+      #手动提交offset
+#      type: batch
+
+#      ack-mode: manual
+
+## Logger Config
+logging:
+  level:
+    com.hexadecimal: debug
+
+
